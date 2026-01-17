@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المستشار القانوني الافتراضي | الأنظمة السعودية</title>
+    
+    <!-- Bootstrap 5 RTL -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Tajawal) -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0f172a; /* كحلي غامق */
+            --secondary-color: #1e293b;
+            --accent-color: #c5a059; /* ذهبي */
+            --accent-hover: #d4af37;
+            --bg-light: #f8fafc;
+            --text-dark: #334155;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .navbar-brand i {
+            color: var(--accent-color);
+            margin-left: 10px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Service Cards */
+        .service-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--accent-color);
+        }
+
+        .service-card.active {
+            border-color: var(--accent-color);
+            background-color: #fffbf0;
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+        }
+
+        .service-card:hover .service-icon,
+        .service-card.active .service-icon {
+            color: var(--accent-color);
+        }
+
+        .service-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Form Section */
+        .input-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: none; /* Hidden by default */
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-control {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1);
+        }
+
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Result Section */
+        .result-section {
+            display: none;
+            margin-bottom: 3rem;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .result-header {
+            background: #f8fafc;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-content {
+            padding: 2rem;
+            white-space: pre-wrap;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #1e293b;
+        }
+
+        .copy-btn {
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            padding: 5px 15px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            background: var(--primary-color);
+            color: rgba(255,255,255,0.7);
+            padding: 1.5rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Loading Spinner */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+        .spinner-border {
+            width: 3rem; height: 3rem;
+            color: var(--accent-color);
+        }
+
+        /* Chat Interface */
+        .chat-section {
+            display: none;
+            margin-bottom: 3rem;
+            animation: slideDown 0.4s ease-out;
+        }
+        
+        .chat-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chat-history {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background-color: #f8fafc;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-message.user-message {
+            align-items: flex-start;
+        }
+
+        .chat-message.ai-message {
+            align-items: flex-end;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 12px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .user-message .message-content {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .ai-message .message-content {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            color: var(--text-dark);
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-scale-balanced"></i>
+                المستشار القانوني الافتراضي
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">استشارات قانونية دقيقة من نظام ذكي</h1>
+            <p class="lead mb-4">مدرب على القوانين السعودية بأحدث التشريعات والأنظمة القضائية</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm"><i class="fas fa-check-double text-success ms-2"></i> دقة عالية في الاستشارات</span>
+                <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm"><i class="fas fa-brain text-primary ms-2"></i> تحليل ذكي للحالات المعقدة</span>
+                <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm"><i class="fas fa-book-open text-warning ms-2"></i> مواكب لأحدث التشريعات</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Services Grid -->
+        <div class="row g-4 mb-5 justify-content-center">
+            <div class="col-md-4 col-lg-2">
+                <div class="service-card" onclick="selectService('consultation', 'استشارة قانونية عامة')">
+                    <i class="fas fa-gavel service-icon"></i>
+                    <div class="service-title">استشارة عامة</div>
+                    <small class="text-muted">إرشادات قانونية</small>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="service-card" onclick="selectService('contract', 'صياغة عقد')">
+                    <i class="fas fa-file-signature service-icon"></i>
+                    <div class="service-title">صياغة عقود</div>
+                    <small class="text-muted">عقود رسمية</small>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="service-card" onclick="selectService('memo', 'مذكرة قانونية')">
+                    <i class="fas fa-file-alt service-icon"></i>
+                    <div class="service-title">مذكرة قانونية</div>
+                    <small class="text-muted">لوائح ومذكرات</small>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="service-card" onclick="selectService('analysis', 'تحليل مذكرة خصم')">
+                    <i class="fas fa-search service-icon"></i>
+                    <div class="service-title">تحليل مذكرة الخصم</div>
+                    <small class="text-muted">دراسة الردود</small>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="service-card" onclick="selectService('objection', 'لائحة اعتراضية')">
+                    <i class="fas fa-balance-scale-right service-icon"></i>
+                    <div class="service-title">اعتراض</div>
+                    <small class="text-muted">على الأحكام</small>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2">
+                <div class="service-card" onclick="selectService('chat', 'المساعد الذكي')">
+                    <i class="fas fa-comments service-icon"></i>
+                    <div class="service-title">المساعد الذكي</div>
+                    <small class="text-muted">محادثة مباشرة</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div id="inputSection" class="input-section">
+            <h4 class="mb-4" style="color: var(--primary-color);">
+                <i class="fas fa-pen-fancy ms-2"></i>
+                <span id="selectedServiceTitle">تفاصيل الطلب</span>
+            </h4>
+            <div class="mb-3">
+                <label for="detailsInput" class="form-label fw-bold">يرجى كتابة التفاصيل والوقائع هنا:</label>
+                <textarea class="form-control" id="detailsInput" rows="6" placeholder="اكتب التفاصيل هنا... مثال: أرغب في صياغة عقد عمل لموظف سعودي براتب 5000 ريال..."></textarea>
+            </div>
+            <button class="btn btn-submit" onclick="processRequest()">
+                <i class="fas fa-paper-plane ms-2"></i> تنفيذ الطلب
+            </button>
+        </div>
+
+        <!-- Chat Section -->
+        <div id="chatSection" class="chat-section">
+            <div class="chat-container">
+                <div id="chatHistory" class="chat-history">
+                    <div class="chat-message ai-message">
+                        <div class="message-content">
+                            مرحباً بك! أنا مستشارك القانوني الذكي. كيف يمكنني مساعدتك اليوم؟
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <textarea id="chatInput" class="form-control" rows="2" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.keyCode==13 && !event.shiftKey){event.preventDefault(); sendChatMessage();}"></textarea>
+                    <button class="btn btn-submit" onclick="sendChatMessage()" style="width: auto; margin-right: 10px;">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="result-section">
+            <div class="result-card">
+                <div class="result-header">
+                    <h5 class="m-0 fw-bold"><i class="fas fa-check-circle text-success ms-2"></i> النتيجة</h5>
+                    <button class="copy-btn" onclick="copyResult()">
+                        <i class="fas fa-copy ms-1"></i> نسخ النص
+                    </button>
+                </div>
+                <div class="result-content" id="resultContent">
+                    <!-- النتيجة ستظهر هنا -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="text-center">
+            <div class="spinner-border mb-3" role="status"></div>
+            <h5 class="text-dark">جاري المعالجة القانونية...</h5>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="mb-1">جميع الحقوق محفوظة © 2024 منصة المستشار القانوني الافتراضي</p>
+            <small class="text-white-50">تنويه: جميع المخرجات استرشادية ولا تغني عن استشارة محامٍ مرخص.</small>
+        </div>
+    </footer>
+
+    <script>
+        let currentService = '';
+
+        function selectService(serviceType, title) {
+            currentService = serviceType;
+            
+            if (serviceType === 'chat') {
+                activateChatMode();
+                return;
+            }
+
+            // Update UI
+            document.querySelectorAll('.service-card').forEach(c => c.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            document.getElementById('selectedServiceTitle').innerText = title;
+            document.getElementById('inputSection').style.display = 'block';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('chatSection').style.display = 'none';
+            
+            // Scroll to input
+            document.getElementById('inputSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function activateChatMode() {
+            document.querySelectorAll('.service-card').forEach(c => c.classList.remove('active'));
+            // Highlight chat card (assuming it's the last one or finding it by onclick)
+            const cards = document.querySelectorAll('.service-card');
+            cards[cards.length - 1].classList.add('active');
+
+            document.getElementById('inputSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('chatSection').style.display = 'block';
+            document.getElementById('chatSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add User Message
+            appendMessage(message, 'user');
+            input.value = '';
+
+            // Show loading indicator in chat (optional)
+            const loadingId = appendMessage('جاري الكتابة...', 'ai', true);
+
+            try {
+                const response = await fetch('/api/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        service_type: 'chat',
+                        details: message
+                    })
+                });
+
+                const data = await response.json();
+                
+                // Remove loading
+                document.getElementById(loadingId).remove();
+
+                if (data.error) {
+                    appendMessage('خطأ: ' + data.error, 'ai');
+                } else {
+                    appendMessage(data.content || data.prompt, 'ai');
+                }
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                appendMessage('حدث خطأ في الاتصال', 'ai');
+            }
+        }
+
+        function appendMessage(text, sender, isLoading = false) {
+            const history = document.getElementById('chatHistory');
+            const div = document.createElement('div');
+            div.className = `chat-message ${sender}-message`;
+            if (isLoading) div.id = 'loading-' + Date.now();
+            
+            div.innerHTML = `
+                <div class="message-content">${text.replace(/\n/g, '<br>')}</div>
+            `;
+            history.appendChild(div);
+            history.scrollTop = history.scrollHeight;
+            return div.id;
+        }
+
+        async function processRequest() {
+            const details = document.getElementById('detailsInput').value;
+            if (!details.trim()) {
+                alert('يرجى إدخال التفاصيل أولاً');
+                return;
+            }
+
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            try {
+                const response = await fetch('/api/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        service_type: currentService,
+                        details: details
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert('خطأ: ' + data.error);
+                } else {
+                    let content = "";
+                    // التعامل مع أنواع الردود المختلفة
+                    if (data.prompt) content = data.prompt;
+                    else if (data.content) content = data.content;
+                    else content = JSON.stringify(data, null, 2);
+
+                    document.getElementById('resultContent').innerText = content;
+                    document.getElementById('resultSection').style.display = 'block';
+                    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (error) {
+                alert('حدث خطأ في الاتصال بالخادم');
+                console.error(error);
+            } finally {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        }
+
+        function copyResult() {
+            const text = document.getElementById('resultContent').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check ms-1"></i> تم النسخ';
+                setTimeout(() => btn.innerHTML = originalText, 2000);
+            });
+        }
+    </script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -32,7 +32,7 @@ class ObjectionService(BaseService):
         if not self.is_ai_available:
             return {
                 "service_type": self.service_type,
-                "content": "⚠️ عذراً، مكتبة الذكاء الاصطناعي غير مثبتة.\n\nيرجى تثبيت المكتبة: pip install google-generativeai",
+                "content": "خدمة الذكاء الاصطناعي غير مفعلة حاليًا.",
                 "disclaimer": DISCLAIMERS[self.service_type]
             }
 

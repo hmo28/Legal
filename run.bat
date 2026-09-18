@@ -1,30 +1,3 @@
 @echo off
-chcp 65001 >nul
-cls
-echo ============================================================
-echo   منصة المستشار القانوني الافتراضي - النسخة الويب
-echo ============================================================
-echo.
-
-cd /d D:\MP
-
-REM التحقق من تثبيت Flask
-python -c "import flask" 2>nul
-if errorlevel 1 (
-    echo ⚠️  Flask غير مثبت. جاري التثبيت...
-    pip install flask
-    echo.
-)
-
-echo 🚀 جاري تشغيل الخادم...
-echo.
-echo 📖 سيتم فتح المنصة على: http://127.0.0.1:5000
-echo.
-echo ⏹️  لإيقاف الخادم: اضغط Ctrl+C
-echo.
-echo ============================================================
-echo.
-
-python services\run_web.py
-
-pause
+cd /d "%~dp0"
+python app.py

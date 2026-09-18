@@ -307,12 +307,12 @@
     <!-- Hero -->
     <div class="hero-section">
         <div class="container">
-            <h1 class="hero-title">استشارات قانونية دقيقة من نظام ذكي</h1>
-            <p class="lead mb-4">مدرب على القوانين السعودية بأحدث التشريعات والأنظمة القضائية</p>
+            <h1 class="hero-title">مساعد لصياغة المسودات وفهم المسائل القانونية</h1>
+            <p class="lead mb-4">مشروع تجريبي يستخدم الذكاء الاصطناعي لتقديم محتوى استرشادي قابل للخطأ</p>
             <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
-                <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm"><i class="fas fa-check-double text-success ms-2"></i> دقة عالية في الاستشارات</span>
+                <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm"><i class="fas fa-check-double text-success ms-2"></i> محتوى يحتاج مراجعة مختص</span>
                 <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm"><i class="fas fa-brain text-primary ms-2"></i> تحليل ذكي للحالات المعقدة</span>
-                <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm"><i class="fas fa-book-open text-warning ms-2"></i> مواكب لأحدث التشريعات</span>
+                <span class="badge bg-white text-dark p-2 rounded-pill shadow-sm"><i class="fas fa-book-open text-warning ms-2"></i> تحقق من الأنظمة والمصادر الرسمية</span>
             </div>
         </div>
     </nav>
@@ -509,9 +509,11 @@
             div.className = `chat-message ${sender}-message`;
             if (isLoading) div.id = 'loading-' + Date.now();
             
-            div.innerHTML = `
-                <div class="message-content">${text.replace(/\n/g, '<br>')}</div>
-            `;
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            content.style.whiteSpace = 'pre-wrap';
+            content.textContent = String(text || '');
+            div.appendChild(content);
             history.appendChild(div);
             history.scrollTop = history.scrollHeight;
             return div.id;

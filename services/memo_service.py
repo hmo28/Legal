@@ -1,43 +1,43 @@
 """
-خدمة المحادثة القانونية الذكية
-Smart Legal Chat Service
+خدمة المذكرات القانونية
+Legal Memo Service
 """
 
 from typing import Dict, Any
 from .base_service import BaseService
-from config import DISCLAIMERS
-from prompts import get_chat_prompt
+from config import DISCLAIMERS, MEMO_SECTIONS
+from prompts import get_memo_prompt
 
-class ChatService(BaseService):
-    """خدمة المحادثة القانونية الذكية"""
+class MemoService(BaseService):
+    """خدمة المذكرات القانونية"""
     
     def __init__(self):
-        super().__init__("chat")
+        super().__init__("memo")
     
     def process(self, details: str) -> Dict[str, Any]:
         """
-        معالجة رسالة المحادثة
+        معالجة طلب إعداد المذكرة القانونية
         
         Args:
-            details: رسالة المستخدم
+            details: تفاصيل المذكرة المطلوبة
             
         Returns:
-            dict: رد الذكاء الاصطناعي
+            dict: المذكرة المنظمة
         """
         if not self.validate_input(details):
             return {
-                "error": "يرجى كتابة رسالة"
+                "error": "يرجى تقديم تفاصيل المذكرة القانونية المطلوبة"
             }
         
         if not self.is_ai_available:
             return {
                 "service_type": self.service_type,
-                "content": "⚠️ عذراً، مكتبة الذكاء الاصطناعي غير مثبتة.\n\nيرجى تثبيت المكتبة: pip install google-generativeai",
+                "content": "خدمة الذكاء الاصطناعي غير مفعلة حاليًا.",
                 "disclaimer": DISCLAIMERS[self.service_type]
             }
 
         # الحصول على التعليمات المناسبة
-        prompt = get_chat_prompt(details)
+        prompt = get_memo_prompt(details)
         
         ai_response = self._call_ai_model(prompt)
         
@@ -54,10 +54,19 @@ class ChatService(BaseService):
         }
     
     def format_output(self, result: str) -> Dict[str, Any]:
-        """تنسيق مخرجات المحادثة"""
+        """
+        تنسيق مخرجات المذكرة
+        
+        Args:
+            result: نص المذكرة من النموذج
+            
+        Returns:
+            dict: مذكرة منظمة
+        """
         return {
-            "service_type": "المساعد القانوني الذكي",
+            "service_type": "المذكرات القانونية",
             "content": result,
+            "sections": MEMO_SECTIONS,
             "disclaimer": DISCLAIMERS[self.service_type],
-            "format": "chat"
+            "format": "document"
         }

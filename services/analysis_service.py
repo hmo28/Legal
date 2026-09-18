@@ -33,7 +33,7 @@ class AnalysisService(BaseService):
         if not self.is_ai_available:
             return {
                 "service_type": self.service_type,
-                "content": "⚠️ عذراً، مكتبة الذكاء الاصطناعي غير مثبتة.\n\nيرجى فتح موجه الأوامر (Terminal) وتشغيل الأمر التالي:\npip install google-generativeai\n\nثم أعد تشغيل البرنامج.",
+                "content": "خدمة الذكاء الاصطناعي غير مفعلة حاليًا.",
                 "disclaimer": DISCLAIMERS[self.service_type]
             }
         
